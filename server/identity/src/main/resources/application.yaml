@@ -1,0 +1,34 @@
+spring:
+  datasource:
+    hikari:
+      maximum-pool-size: 150
+      minimum-idle: 50
+      idle-timeout: 30000
+      connection-timeout: 2000
+      max-lifetime: 180000
+      validation-timeout: 1000
+  jackson:
+    serialization:
+      flush-after-write-value: true
+    default-property-inclusion: non_null
+
+server:
+  servlet:
+    context-path: /api/v1
+  port: 8080
+
+security:
+  jwt:
+    access-token:
+      key: ${ACCESS_TOKEN_KEY}
+      max-age: ${ACCESS_TOKEN_MAX_AGE:1000}
+    refresh-token:
+      key: ${REFRESH_TOKEN_KEY}
+      max-age: ${REFRESH_TOKEN_MAX_AGE:1000}
+
+logging:
+  level:
+    root: WARN
+    "[org.vietnamsea.identity]": INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
