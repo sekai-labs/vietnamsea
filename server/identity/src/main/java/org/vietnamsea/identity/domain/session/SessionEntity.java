@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
+import lombok.*;
 import org.vietnamsea.identity.domain.user.UserEntity;
 
 import jakarta.persistence.Column;
@@ -16,13 +17,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table(name = "sessions")
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class SessionEntity implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
@@ -46,8 +48,7 @@ public class SessionEntity implements Serializable {
 
   @PrePersist
   protected void onCreate() {
-    var now = OffsetDateTime.now();
-    createdAt = now;
+    createdAt = OffsetDateTime.now();
     revoked = false;
   }
 }

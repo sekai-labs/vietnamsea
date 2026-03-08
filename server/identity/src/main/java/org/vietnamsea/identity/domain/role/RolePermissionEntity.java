@@ -1,5 +1,6 @@
 package org.vietnamsea.identity.domain.role;
 
+import lombok.*;
 import org.vietnamsea.identity.domain.permission.PermissionEntity;
 
 import jakarta.persistence.Column;
@@ -13,8 +14,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table(name = "role_permissions", indexes = {
@@ -25,6 +24,9 @@ import lombok.Setter;
 })
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class RolePermissionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

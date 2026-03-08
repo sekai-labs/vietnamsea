@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import lombok.NonNull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -23,7 +24,7 @@ public class CorsConfig {
   @Bean
   WebMvcConfigurer corsConfigurer() {
     return new WebMvcConfigurer() {
-      public void addCorsMappings(CorsRegistry registry) {
+      public void addCorsMappings(@NonNull CorsRegistry registry) {
         registry.addMapping("/**")
             .allowedOrigins(getCorsAllowed())
             .allowedMethods("*")

@@ -5,6 +5,7 @@ import java.time.OffsetDateTime;
 import java.util.Collection;
 import java.util.UUID;
 
+import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 import org.vietnamsea.identity.common.entity.BaseSoftDeleteEntity;
@@ -22,9 +23,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity(name = "users")
 @Table(name = "users", indexes = {
@@ -37,6 +35,8 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserEntity extends BaseSoftDeleteEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)

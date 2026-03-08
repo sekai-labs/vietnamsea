@@ -2,6 +2,7 @@ package org.vietnamsea.identity.config.security;
 
 import java.io.IOException;
 
+import lombok.NonNull;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -18,7 +19,7 @@ public class AuthenticationEntryPointConfig implements AuthenticationEntryPoint 
   private final HandlerExceptionResolver handlerExceptionResolver;
 
   @Override
-  public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)
+  public void commence(@NonNull HttpServletRequest request,@NonNull HttpServletResponse response,@NonNull AuthenticationException authException)
       throws IOException, ServletException {
     handlerExceptionResolver.resolveException(request, response, response, authException);
   }
