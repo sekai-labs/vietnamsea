@@ -1,11 +1,11 @@
-package org.vietnamsea.identity;
+package org.vietnamsea.payment;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class IdentityStartup {
+public class PaymentStartup {
   public static void main(String[] args) {
-    SpringApplication.run(IdentityStartup.class, args);
+    SpringApplication.run(PaymentStartup.class, args);
   }
 }
