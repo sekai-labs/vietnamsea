@@ -1,10 +1,8 @@
-package org.vietnamsea.identity.domain.session;
+package org.vietnamsea.identity.domain.credential;
 
-import java.io.Serializable;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
-import lombok.*;
 import org.vietnamsea.identity.domain.user.UserEntity;
 
 import jakarta.persistence.Column;
@@ -17,15 +15,20 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Entity
-@Table(name = "sessions")
+@Entity(name = "user_credentials")
+@Table(name = "user_credentials")
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SessionEntity implements Serializable {
+public class UserCredentialEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   @Column(name = "id")
@@ -33,22 +36,15 @@ public class SessionEntity implements Serializable {
   @ManyToOne(targetEntity = UserEntity.class, fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")
   private UserEntity user;
-  @Column(name = "device_id")
-  private String deviceId;
-  @Column(name = "ip_address")
-  private String ipAddress;
-  @Column(name = "user_agent")
-  private String userAgent;
-  @Column(name = "created_at", nullable = false)
+  @Column(name = "hash_password", nullable = false, length = 128)
+  private String hashPassword;
+  @Column(name = "changed_at")
+  private OffsetDateTime changedAt;
+  @Column(name = "created_at", nullable = false, updatable = false)
   private OffsetDateTime createdAt;
-  @Column(name = "expires_at", nullable = false)
-  private OffsetDateTime expiresAt;
-  @Column(name = "revoked", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
-  private Boolean revoked;
 
   @PrePersist
   protected void onCreate() {
     createdAt = OffsetDateTime.now();
-    revoked = false;
   }
 }

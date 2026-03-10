@@ -1,0 +1,76 @@
+spring:
+  data:
+    redis:
+      port: ${REDIS_PORT:6379}
+      host: ${REDIS_HOST:localhost}
+      timeout: 2000
+      connect-timeout: 2000
+      repositories:
+        enabled: false
+      lettuce:
+        pool:
+          max-active: 5
+  datasource:
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:12345}
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME}
+    hikari:
+      maximum-pool-size: 150
+      minimum-idle: 50
+      idle-timeout: 30000
+      connection-timeout: 2000
+      max-lifetime: 180000
+      validation-timeout: 1000
+      pool-name: vns-identity
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+  jackson:
+    serialization:
+      flush-after-write-value: true
+    default-property-inclusion: non_null
+
+server:
+  servlet:
+    context-path: /api/v1
+  port: 8080
+
+security:
+  jwt:
+    access-token:
+      key: ${ACCESS_TOKEN_KEY}
+      max-age: ${ACCESS_TOKEN_MAX_AGE:1000}
+    refresh-token:
+      key: ${REFRESH_TOKEN_KEY}
+      max-age: ${REFRESH_TOKEN_MAX_AGE:1000}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    enabled: true
+    try-it-out-enabled: true
+    operations-sorter: method
+    tags-sorter: alpha
+    filter: true
+    path: /swagger-ui
+
+logging:
+  level:
+    root: WARN
+    "[org.vietnamsea.identity]": INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
