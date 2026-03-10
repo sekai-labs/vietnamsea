@@ -1,9 +1,10 @@
-package org.vietnamsea.identity.domain.credential;
+package org.vietnamsea.identity.infra.persistence.credential.entity;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
-import org.vietnamsea.identity.domain.user.UserEntity;
+import org.vietnamsea.identity.infra.persistence.client.entity.OAuthClientEntity;
+import org.vietnamsea.identity.infra.persistence.user.entity.UserEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,14 +22,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity(name = "totp_credentials")
-@Table(name = "totp_credentials")
+@Entity(name = "oauth_credentials")
+@Table(name = "oauth_credentials")
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TotpCredentialEntity {
+public class OAuthCredentialEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   @Column(name = "id")
@@ -36,18 +37,18 @@ public class TotpCredentialEntity {
   @ManyToOne(targetEntity = UserEntity.class, fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")
   private UserEntity user;
-  @Column(name = "secret_encrypted", nullable = false, length = 128)
-  private String secretEncrypted;
-  @Column(name = "enabled", columnDefinition = "BOOLEAN DEFAULT TRUE")
-  private Boolean enabled;
+  @ManyToOne(targetEntity = OAuthClientEntity.class, fetch = FetchType.EAGER, optional = false)
+  @JoinColumn(name = "provider_id")
+  private OAuthClientEntity provider;
+  @Column(name = "provider_user_id", nullable = false)
+  private String providerUserId;
+  @Column(name = "email")
+  private String email;
   @Column(name = "created_at", nullable = false, updatable = false)
   private OffsetDateTime createdAt;
 
   @PrePersist
   protected void onCreate() {
     createdAt = OffsetDateTime.now();
-    if (enabled == null) {
-      enabled = false;
-    }
   }
 }

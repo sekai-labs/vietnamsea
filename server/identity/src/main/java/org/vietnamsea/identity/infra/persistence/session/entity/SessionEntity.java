@@ -1,12 +1,12 @@
-package org.vietnamsea.identity.domain.session;
+package org.vietnamsea.identity.infra.persistence.session.entity;
 
 import java.io.Serializable;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
-import lombok.*;
-import org.vietnamsea.identity.domain.user.UserEntity;
+import org.vietnamsea.identity.infra.persistence.user.entity.UserEntity;
 
+import lombok.*;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

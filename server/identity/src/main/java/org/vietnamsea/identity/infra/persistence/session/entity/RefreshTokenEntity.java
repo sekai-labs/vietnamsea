@@ -1,4 +1,4 @@
-package org.vietnamsea.identity.domain.session;
+package org.vietnamsea.identity.infra.persistence.session.entity;
 
 import java.io.Serializable;
 import java.time.OffsetDateTime;

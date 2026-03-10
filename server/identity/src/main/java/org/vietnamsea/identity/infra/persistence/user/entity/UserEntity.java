@@ -1,4 +1,4 @@
-package org.vietnamsea.identity.domain.user;
+package org.vietnamsea.identity.infra.persistence.user.entity;
 
 import java.sql.Timestamp;
 import java.time.OffsetDateTime;
@@ -8,7 +8,7 @@ import java.util.UUID;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 import org.vietnamsea.identity.common.entity.BaseSoftDeleteEntity;
-import org.vietnamsea.identity.domain.session.SessionEntity;
+import org.vietnamsea.identity.infra.persistence.session.entity.SessionEntity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

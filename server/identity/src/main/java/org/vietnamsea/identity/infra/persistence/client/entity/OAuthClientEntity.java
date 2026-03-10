@@ -1,4 +1,4 @@
-package org.vietnamsea.identity.domain.client;
+package org.vietnamsea.identity.infra.persistence.client.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
