@@ -5,7 +5,6 @@ import java.time.OffsetDateTime;
 import java.util.Collection;
 import java.util.UUID;
 
-import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 import org.vietnamsea.identity.common.entity.BaseSoftDeleteEntity;
@@ -23,6 +22,12 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.var;
 
 @Entity(name = "users")
 @Table(name = "users", indexes = {
@@ -46,8 +51,6 @@ public class UserEntity extends BaseSoftDeleteEntity {
   private String username;
   @Column(name = "email", unique = true)
   private String email;
-  @Column(name = "hash_password", nullable = false)
-  private String hashPassword;
   @Column(name = "created_at", nullable = false, updatable = false)
   private OffsetDateTime createdAt;
   @Column(name = "updated_at", nullable = false)

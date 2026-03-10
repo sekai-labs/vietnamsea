@@ -1,5 +1,19 @@
 spring:
+  data:
+    redis:
+      port: ${REDIS_PORT:6379}
+      host: ${REDIS_HOST:localhost}
+      timeout: 2000
+      connect-timeout: 2000
+      repositories:
+        enabled: false
+      lettuce:
+        pool:
+          max-active: 5
   datasource:
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:12345}
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME}
     hikari:
       maximum-pool-size: 150
       minimum-idle: 50
@@ -7,6 +21,16 @@ spring:
       connection-timeout: 2000
       max-lifetime: 180000
       validation-timeout: 1000
+      pool-name: vns-identity
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
   jackson:
     serialization:
       flush-after-write-value: true
@@ -25,6 +49,24 @@ security:
     refresh-token:
       key: ${REFRESH_TOKEN_KEY}
       max-age: ${REFRESH_TOKEN_MAX_AGE:1000}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    enabled: true
+    try-it-out-enabled: true
+    operations-sorter: method
+    tags-sorter: alpha
+    filter: true
+    path: /swagger-ui
 
 logging:
   level:

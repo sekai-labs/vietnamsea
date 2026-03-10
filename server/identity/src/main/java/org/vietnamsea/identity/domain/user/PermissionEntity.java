@@ -1,4 +1,4 @@
-package org.vietnamsea.identity.domain.permission;
+package org.vietnamsea.identity.domain.user;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

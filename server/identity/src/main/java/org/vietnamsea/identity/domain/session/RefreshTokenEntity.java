@@ -1,4 +1,4 @@
-package org.vietnamsea.identity.domain.token;
+package org.vietnamsea.identity.domain.session;
 
 import java.io.Serializable;
 import java.time.OffsetDateTime;
@@ -6,7 +6,6 @@ import java.util.UUID;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.vietnamsea.identity.domain.session.SessionEntity;
 
 @Entity
 @Table(name = "refresh_tokens")

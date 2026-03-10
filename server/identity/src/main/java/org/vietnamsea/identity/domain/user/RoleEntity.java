@@ -1,4 +1,4 @@
-package org.vietnamsea.identity.domain.role;
+package org.vietnamsea.identity.domain.user;
 
 import java.io.Serializable;
 
