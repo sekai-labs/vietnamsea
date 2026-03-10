@@ -3,6 +3,7 @@ package org.vietnamsea.identity.domain.credential;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
+import org.vietnamsea.identity.domain.client.OAuthClientEntity;
 import org.vietnamsea.identity.domain.user.UserEntity;
 
 import jakarta.persistence.Column;
@@ -32,6 +33,9 @@ public class OAuthCredentialEntity {
   @ManyToOne(targetEntity = UserEntity.class, fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")
   private UserEntity user;
+  @ManyToOne(targetEntity = OAuthClientEntity.class, fetch = FetchType.EAGER, optional = false)
+  @JoinColumn(name = "provider_id")
+  private OAuthClientEntity provider;
   @Column(name = "provider_user_id", nullable = false)
   private String providerUserId;
   @Column(name = "email")
