@@ -1,9 +1,9 @@
-package org.vietnamsea.identity.domain.credential;
+package org.vietnamsea.identity.infra.persistence.credential.entity;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
-import org.vietnamsea.identity.domain.user.UserEntity;
+import org.vietnamsea.identity.infra.persistence.user.entity.UserEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,14 +21,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity(name = "user_credentials")
-@Table(name = "user_credentials")
+@Entity(name = "totp_credentials")
+@Table(name = "totp_credentials")
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserCredentialEntity {
+public class TotpCredentialEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   @Column(name = "id")
@@ -36,15 +36,18 @@ public class UserCredentialEntity {
   @ManyToOne(targetEntity = UserEntity.class, fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")
   private UserEntity user;
-  @Column(name = "hash_password", nullable = false, length = 128)
-  private String hashPassword;
-  @Column(name = "changed_at")
-  private OffsetDateTime changedAt;
+  @Column(name = "secret_encrypted", nullable = false, length = 128)
+  private String secretEncrypted;
+  @Column(name = "enabled", columnDefinition = "BOOLEAN DEFAULT TRUE")
+  private Boolean enabled;
   @Column(name = "created_at", nullable = false, updatable = false)
   private OffsetDateTime createdAt;
 
   @PrePersist
   protected void onCreate() {
     createdAt = OffsetDateTime.now();
+    if (enabled == null) {
+      enabled = false;
+    }
   }
 }

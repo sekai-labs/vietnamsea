@@ -1,11 +1,12 @@
-package org.vietnamsea.identity.domain.session;
+package org.vietnamsea.identity.infra.persistence.session.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.vietnamsea.identity.domain.user.UserEntity;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
+
+import org.vietnamsea.identity.infra.persistence.user.entity.UserEntity;
 
 @Entity(name = "login_histories")
 @Table(name = "login_histories")
@@ -30,6 +31,7 @@ public class LoginHistoryEntity {
     private Boolean success;
     @Column(name = "created_at", nullable = false, updatable = false)
     private OffsetDateTime createdAt;
+
     @PrePersist
     public void prePersist() {
         createdAt = OffsetDateTime.now();

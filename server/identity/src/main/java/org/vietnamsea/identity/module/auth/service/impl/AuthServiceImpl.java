@@ -6,11 +6,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.vietnamsea.identity.exception.AuthException;
-import org.vietnamsea.identity.infra.persistence.UserRepository;
+import org.vietnamsea.identity.infra.persistence.user.repository.UserRepository;
 import org.vietnamsea.identity.module.auth.dto.request.LocalAuthRequest;
 import org.vietnamsea.identity.module.auth.dto.response.AuthResponse;
 import org.vietnamsea.identity.module.auth.service.AuthService;
 import org.vietnamsea.identity.module.security.jwt.JwtService;
+
+import com.nimbusds.jwt.JWT;
 
 import lombok.RequiredArgsConstructor;
 

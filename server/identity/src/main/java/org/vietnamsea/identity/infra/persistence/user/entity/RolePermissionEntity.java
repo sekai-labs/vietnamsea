@@ -1,4 +1,4 @@
-package org.vietnamsea.identity.domain.user;
+package org.vietnamsea.identity.infra.persistence.user.entity;
 
 import lombok.*;
 import jakarta.persistence.Column;

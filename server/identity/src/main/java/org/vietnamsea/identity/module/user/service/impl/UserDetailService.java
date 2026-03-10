@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.vietnamsea.identity.exception.AuthException;
-import org.vietnamsea.identity.infra.persistence.UserRepository;
+import org.vietnamsea.identity.infra.persistence.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 

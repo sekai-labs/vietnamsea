@@ -1,10 +1,10 @@
-package org.vietnamsea.identity.domain.credential;
+package org.vietnamsea.identity.infra.persistence.credential.entity;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
-import org.vietnamsea.identity.domain.client.OAuthClientEntity;
-import org.vietnamsea.identity.domain.user.UserEntity;
+import org.vietnamsea.identity.infra.persistence.client.entity.OAuthClientEntity;
+import org.vietnamsea.identity.infra.persistence.user.entity.UserEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
