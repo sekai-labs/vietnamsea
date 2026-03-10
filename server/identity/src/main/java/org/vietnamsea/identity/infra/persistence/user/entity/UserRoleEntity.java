@@ -1,13 +1,13 @@
 package org.vietnamsea.identity.infra.persistence.user.entity;
 
-import java.util.UUID;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,10 +25,12 @@ public class UserRoleEntity {
   @Column(name = "id")
   private Long id;
 
-  @Column(name = "user_id", nullable = false)
-  private UUID userId;
+  @ManyToOne(targetEntity = UserEntity.class)
+  @JoinColumn(name = "user_id", nullable = false)
+  private UserEntity user;
 
-  @Column(name = "role_id", nullable = false)
-  private Long roleId;
+  @ManyToOne(targetEntity = RoleEntity.class)
+  @JoinColumn(name = "role_id", nullable = false)
+  private RoleEntity role;
 
 }
