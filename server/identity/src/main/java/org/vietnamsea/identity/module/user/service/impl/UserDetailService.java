@@ -3,6 +3,7 @@ package org.vietnamsea.identity.module.user.service.impl;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -31,8 +32,15 @@ public class UserDetailService implements UserDetailsService {
     if (username == null) {
       throw new UsernameNotFoundException("username shouldn't be empty");
     }
-    var userEntity = userRepository.findByUsername(username)
-        .orElseThrow(() -> new AuthException("username is not founded"));
+    UserEntity userEntity = null;
+    try {
+      var uuid = UUID.fromString(username);
+      userEntity = userRepository.findById(uuid)
+          .orElseThrow(() -> new AuthException("username is not founded"));
+    } catch (IllegalArgumentException ex) {
+      userEntity = userRepository.findByUsername(username)
+          .orElseThrow(() -> new AuthException("username is not founded"));
+    }
     var credential = userCredentialRepository
         .findByUserAndChangedAtIsNull(userEntity)
         .orElseThrow(() -> new AuthException("user has no active credential"));

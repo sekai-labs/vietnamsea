@@ -5,6 +5,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.vietnamsea.identity.common.helper.TokenUtil;
 import org.vietnamsea.identity.exception.AuthException;
 import org.vietnamsea.identity.infra.persistence.user.repository.UserRepository;
 import org.vietnamsea.identity.module.auth.dto.request.LocalAuthRequest;
@@ -30,8 +31,10 @@ public class AuthServiceImpl implements AuthService {
         .orElseThrow(() -> new AuthException("username is not found"));
     try {
       var accessToken = jwtService.generateToken(userEntity.getId().toString());
+      var refreshToken = TokenUtil.generateRefreshToken();
       return AuthResponse.builder()
           .accessToken(accessToken)
+          .refreshToken(refreshToken)
           .build();
     } catch (Exception ex) {
       throw new AuthException("error happen when try login");
