@@ -5,8 +5,6 @@ import java.time.OffsetDateTime;
 import java.util.Collection;
 import java.util.UUID;
 
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.SQLRestriction;
 import org.vietnamsea.identity.common.entity.BaseSoftDeleteEntity;
 import org.vietnamsea.identity.infra.persistence.session.entity.SessionEntity;
 
@@ -16,7 +14,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Index;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
@@ -28,13 +25,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity(name = "users")
-@Table(name = "users", indexes = {
-    @Index(name = "idx_users_username", columnList = "username"),
-    @Index(name = "idx_users_email", columnList = "email"),
-    @Index(name = "idx_users_created_at", columnList = "created_at")
-})
-@SQLDelete(sql = "UPDATE users SET deleted_at = now() WHERE id = ? AND deleted_at IS NULL")
-@SQLRestriction("deleted_at IS NULL")
+@Table(name = "users")
 @Builder
 @Getter
 @Setter
@@ -45,21 +36,21 @@ public class UserEntity extends BaseSoftDeleteEntity {
   @GeneratedValue(strategy = GenerationType.UUID)
   @Column(name = "id")
   private UUID id;
-  @Column(name = "username", unique = true)
+  @Column(name = "username")
   private String username;
-  @Column(name = "email", unique = true)
+  @Column(name = "email")
   private String email;
-  @Column(name = "created_at", nullable = false, updatable = false)
+  @Column(name = "created_at")
   private OffsetDateTime createdAt;
-  @Column(name = "updated_at", nullable = false)
+  @Column(name = "updated_at")
   private OffsetDateTime updatedAt;
-  @Column(name = "email_verified", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+  @Column(name = "email_verified")
   private Boolean emailVerified;
   @Column(name = "status")
   private String status;
-  @Column(name = "locked", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+  @Column(name = "locked")
   private Boolean locked;
-  @Column(name = "disabled", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+  @Column(name = "disabled")
   private Boolean disabled;
   @Column(name = "last_login_at")
   private Timestamp lastLoginAt;

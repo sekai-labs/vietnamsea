@@ -9,7 +9,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Index;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -19,9 +18,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "roles", indexes = {
-    @Index(name = "idx_roles_code", columnList = "code", unique = true)
-})
+@Table(name = "roles")
 @Getter
 @Setter
 @Builder
@@ -32,11 +29,11 @@ public class RoleEntity implements Serializable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
   private Long id;
-  @Column(name = "code", nullable = false)
+  @Column(name = "code")
   private String code;
-  @Column(name = "name", nullable = false, length = 30)
+  @Column(name = "name")
   private String name;
-  @Column(name = "description", nullable = false, length = 256)
+  @Column(name = "description")
   private String description;
   @OneToMany(targetEntity = RolePermissionEntity.class, fetch = FetchType.LAZY)
   private Collection<RolePermissionEntity> permissions;

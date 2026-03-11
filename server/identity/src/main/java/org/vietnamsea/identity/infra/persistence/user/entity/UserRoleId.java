@@ -3,16 +3,19 @@ package org.vietnamsea.identity.infra.persistence.user.entity;
 import java.io.Serializable;
 import java.util.UUID;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-@EqualsAndHashCode
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Embeddable
 public class UserRoleId implements Serializable {
-  private UUID user;
-  private Long role;
+  @Column(name = "user_id")
+  private UUID userId;
+  @Column(name = "role_id")
+  private Long roleId;
 }

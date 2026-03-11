@@ -1,5 +1,6 @@
 package org.vietnamsea.identity.infra.persistence.credential.entity;
 
+import java.io.Serializable;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
@@ -28,7 +29,7 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserCredentialEntity {
+public class UserCredentialEntity implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   @Column(name = "id")
@@ -36,11 +37,11 @@ public class UserCredentialEntity {
   @ManyToOne(targetEntity = UserEntity.class, fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")
   private UserEntity user;
-  @Column(name = "hash_password", nullable = false, length = 128)
+  @Column(name = "hash_password")
   private String hashPassword;
   @Column(name = "changed_at")
   private OffsetDateTime changedAt;
-  @Column(name = "created_at", nullable = false, updatable = false)
+  @Column(name = "created_at")
   private OffsetDateTime createdAt;
 
   @PrePersist

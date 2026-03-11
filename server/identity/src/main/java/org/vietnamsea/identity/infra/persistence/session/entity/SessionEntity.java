@@ -6,7 +6,6 @@ import java.util.UUID;
 
 import org.vietnamsea.identity.infra.persistence.user.entity.UserEntity;
 
-import lombok.*;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -17,6 +16,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "sessions")
@@ -39,11 +43,11 @@ public class SessionEntity implements Serializable {
   private String ipAddress;
   @Column(name = "user_agent")
   private String userAgent;
-  @Column(name = "created_at", nullable = false)
+  @Column(name = "created_at")
   private OffsetDateTime createdAt;
-  @Column(name = "expires_at", nullable = false)
+  @Column(name = "expires_at")
   private OffsetDateTime expiresAt;
-  @Column(name = "revoked", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+  @Column(name = "revoked")
   private Boolean revoked;
 
   @PrePersist

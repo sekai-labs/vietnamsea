@@ -1,5 +1,6 @@
 package org.vietnamsea.identity.infra.persistence.credential.entity;
 
+import java.io.Serializable;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
@@ -29,7 +30,7 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OAuthCredentialEntity {
+public class OAuthCredentialEntity implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   @Column(name = "id")
@@ -40,11 +41,11 @@ public class OAuthCredentialEntity {
   @ManyToOne(targetEntity = OAuthClientEntity.class, fetch = FetchType.EAGER, optional = false)
   @JoinColumn(name = "provider_id")
   private OAuthClientEntity provider;
-  @Column(name = "provider_user_id", nullable = false)
+  @Column(name = "provider_user_id")
   private String providerUserId;
   @Column(name = "email")
   private String email;
-  @Column(name = "created_at", nullable = false, updatable = false)
+  @Column(name = "created_at")
   private OffsetDateTime createdAt;
 
   @PrePersist
