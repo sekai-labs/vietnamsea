@@ -1,0 +1,3 @@
+# Top-level gitignore for the repository
+# Ignore IDE project files
+.idea/

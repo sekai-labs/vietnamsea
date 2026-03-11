@@ -10,7 +10,6 @@ import org.hibernate.annotations.SQLRestriction;
 import org.vietnamsea.identity.common.entity.BaseSoftDeleteEntity;
 import org.vietnamsea.identity.infra.persistence.session.entity.SessionEntity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -27,7 +26,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.var;
 
 @Entity(name = "users")
 @Table(name = "users", indexes = {
@@ -59,17 +57,26 @@ public class UserEntity extends BaseSoftDeleteEntity {
   private Boolean emailVerified;
   @Column(name = "status")
   private String status;
+  @Column(name = "locked", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+  private Boolean locked;
+  @Column(name = "disabled", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+  private Boolean disabled;
   @Column(name = "last_login_at")
   private Timestamp lastLoginAt;
 
-  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
   private Collection<SessionEntity> sessions;
+
+  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+  private Collection<UserRoleEntity> roles;
 
   @PrePersist
   protected void onCreate() {
     var now = OffsetDateTime.now();
     createdAt = now;
     updatedAt = now;
+    locked = false;
+    disabled = false;
   }
 
   @PreUpdate
