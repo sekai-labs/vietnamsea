@@ -12,8 +12,6 @@ import org.vietnamsea.identity.module.auth.dto.response.AuthResponse;
 import org.vietnamsea.identity.module.auth.service.AuthService;
 import org.vietnamsea.identity.module.security.jwt.JwtService;
 
-import com.nimbusds.jwt.JWT;
-
 import lombok.RequiredArgsConstructor;
 
 @Service

@@ -1,5 +1,7 @@
 package org.vietnamsea.identity.infra.persistence.client.entity;
 
+import java.io.Serializable;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,18 +21,18 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OAuthClientEntity {
+public class OAuthClientEntity implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
   private Long id;
   @Column(name = "name")
   private String name;
-  @Column(name = "client_id", nullable = false)
+  @Column(name = "client_id")
   private String clientId;
-  @Column(name = "client_secret_hash", nullable = false)
+  @Column(name = "client_secret_hash")
   private String clientSecretHash;
-  @Column(name = "redirect_urls", nullable = false)
+  @Column(name = "redirect_urls")
   private String redirectUrls;
   @Column(name = "grant_types")
   private String grantTypes;

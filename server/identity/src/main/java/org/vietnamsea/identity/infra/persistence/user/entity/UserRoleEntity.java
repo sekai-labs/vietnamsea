@@ -1,33 +1,31 @@
 package org.vietnamsea.identity.infra.persistence.user.entity;
 
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
-import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@IdClass(UserRoleId.class)
-@Table(name = "user_roles", indexes = {
-    @Index(name = "idx_user_roles_role", columnList = "role_id")
-})
+@Table(name = "user_roles")
 @Getter
 @Setter
 public class UserRoleEntity {
+  @EmbeddedId
+  private UserRoleId id;
 
-  @Id
+  @MapsId("userId")
   @ManyToOne(targetEntity = UserEntity.class)
-  @JoinColumn(name = "user_id", nullable = false)
+  @JoinColumn(name = "user_id")
   private UserEntity user;
 
-  @Id
+  @MapsId("roleId")
   @ManyToOne(targetEntity = RoleEntity.class, fetch = FetchType.LAZY)
-  @JoinColumn(name = "role_id", nullable = false)
+  @JoinColumn(name = "role_id")
   private RoleEntity role;
 
 }
