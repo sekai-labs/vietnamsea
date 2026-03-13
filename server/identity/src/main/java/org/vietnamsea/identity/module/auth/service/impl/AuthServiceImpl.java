@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.vietnamsea.identity.common.helper.TokenUtil;
 import org.vietnamsea.identity.exception.AuthException;
 import org.vietnamsea.identity.infra.persistence.user.repository.UserRepository;
+import org.vietnamsea.identity.module.auth.dto.request.GoogleAuthRequest;
 import org.vietnamsea.identity.module.auth.dto.request.LocalAuthRequest;
 import org.vietnamsea.identity.module.auth.dto.response.AuthResponse;
 import org.vietnamsea.identity.module.auth.service.AuthService;
@@ -39,5 +40,10 @@ public class AuthServiceImpl implements AuthService {
     } catch (Exception ex) {
       throw new AuthException("error happen when try login");
     }
+  }
+
+  public AuthResponse googleAuthentication(GoogleAuthRequest request) {
+
+    return null;
   }
 }
