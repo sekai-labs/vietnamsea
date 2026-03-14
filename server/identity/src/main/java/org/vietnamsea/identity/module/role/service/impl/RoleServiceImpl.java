@@ -12,6 +12,7 @@ import org.vietnamsea.identity.common.dto.QueryWrapper;
 import org.vietnamsea.identity.exception.ValidationException;
 import org.vietnamsea.identity.infra.persistence.user.entity.RoleEntity;
 import org.vietnamsea.identity.infra.persistence.user.repository.RoleRepository;
+import org.vietnamsea.identity.module.role.dto.request.RoleRequest;
 import org.vietnamsea.identity.module.role.dto.response.RoleResponse;
 import org.vietnamsea.identity.module.role.mapper.RoleEntityMapper;
 import org.vietnamsea.identity.module.role.service.RoleService;
@@ -58,5 +59,17 @@ public class RoleServiceImpl implements RoleService {
       predicates.addAll(Arrays.asList(defaultPredicates));
     }
     return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+  }
+
+  @Override
+  public void createRole(RoleRequest request) {
+    var roleEntity = mapper.toEntity(request);
+    roleRepository.save(roleEntity);
+  }
+
+  @Override
+  public void updateRole(Long id, RoleRequest request) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'updateRole'");
   }
 }
