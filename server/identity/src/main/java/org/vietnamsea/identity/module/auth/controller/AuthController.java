@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.vietnamsea.identity.common.dto.ResponseObject;
-import org.vietnamsea.identity.module.auth.dto.request.LocalAuthRequest;
+import org.vietnamsea.identity.module.auth.dto.request.AuthRequest;
 import org.vietnamsea.identity.module.auth.dto.response.AuthResponse;
 import org.vietnamsea.identity.module.auth.service.AuthService;
 
@@ -18,9 +18,9 @@ import lombok.RequiredArgsConstructor;
 public class AuthController {
   private final AuthService authService;
 
-  @PostMapping("local")
-  ResponseEntity<ResponseObject<AuthResponse>> localAuthentication(@RequestBody LocalAuthRequest request) {
-    var result = authService.localAuthentication(request);
+  @PostMapping("login")
+  ResponseEntity<ResponseObject<AuthResponse>> authentication(@RequestBody AuthRequest request) {
+    var result = authService.authentication(request);
     return ResponseEntity.ok(new ResponseObject.Builder<AuthResponse>()
         .success(true)
         .code("SUCCESS")

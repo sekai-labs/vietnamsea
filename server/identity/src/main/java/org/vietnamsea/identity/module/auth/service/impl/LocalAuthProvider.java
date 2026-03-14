@@ -8,9 +8,12 @@ import org.vietnamsea.identity.module.auth.dto.request.AuthRequest;
 import org.vietnamsea.identity.module.auth.dto.response.AuthIdentityResponse;
 import org.vietnamsea.identity.module.auth.service.AuthProvider;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class LocalAuthProvider implements AuthProvider {
-  private UserRepository userRepository;
+  private final UserRepository userRepository;
 
   @Override
   public AuthProviderEnum getProvider() {
@@ -24,7 +27,7 @@ public class LocalAuthProvider implements AuthProvider {
 
     return AuthIdentityResponse.builder()
         .providerId(getProvider().toString())
-        .identity(userEntity.getId().toString())
+        .identity(userEntity.getId())
         .email(userEntity.getEmail())
         .name(userEntity.getUsername())
         .build();
