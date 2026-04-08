@@ -1,21 +1,27 @@
 package org.vietnamsea.identity.module.client.service.impl;
 
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.vietnamsea.identity.common.helper.EncryptUtil;
+import org.vietnamsea.identity.config.security.OAuthConfig;
 import org.vietnamsea.identity.constant.AuthProviderEnum;
+import org.vietnamsea.identity.exception.ActionFailedException;
 import org.vietnamsea.identity.exception.ValidationException;
 import org.vietnamsea.identity.infra.persistence.client.repository.OAuthClientRepository;
 import org.vietnamsea.identity.module.auth.config.OAuth2ProviderConfig;
 import org.vietnamsea.identity.module.client.service.OAuthProviderRegistry;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
 @RequiredArgsConstructor
 public class OAuthProviderRegistryImpl implements OAuthProviderRegistry {
   private final OAuthClientRepository oAuthClientRepository;
+  private final OAuthConfig config;
 
   @Override
   public OAuth2ProviderConfig getConfig(AuthProviderEnum provider) {
@@ -27,14 +33,24 @@ public class OAuthProviderRegistryImpl implements OAuthProviderRegistry {
       throw new ValidationException("oauth provider config is invalid");
     }
 
-    return new OAuth2ProviderConfig(
-        client.getClientId(),
-        client.getClientSecretHash(),
-        client.getAuthorizeUrl(),
-        client.getTokenUri(),
-        client.getUserInfoUrl(),
-        client.getRedirectUrl(),
-        parseScopes(client.getScope()));
+    try {
+      var masterKey = Base64.getDecoder().decode(config.getMasterKey());
+      var encryptedDataKey = Base64.getDecoder().decode(client.getEncryptedDataKey());
+      var dataKey = EncryptUtil.decryptStream(masterKey, encryptedDataKey);
+      byte[] encryptedSecret = Base64.getDecoder().decode(client.getClientSecretHash());
+      byte[] secretBytes = EncryptUtil.decryptStream(dataKey, encryptedSecret);
+      String clientSecret = new String(secretBytes);
+      return new OAuth2ProviderConfig(
+          client.getClientId(),
+          clientSecret,
+          client.getAuthorizeUrl(),
+          client.getTokenUri(),
+          client.getUserInfoUrl(),
+          client.getRedirectUrl(),
+          parseScopes(client.getScope()));
+    } catch (Exception ex) {
+      throw new ActionFailedException("Can't login with method " + provider.toString(), ex);
+    }
   }
 
   private Set<String> parseScopes(String rawScope) {

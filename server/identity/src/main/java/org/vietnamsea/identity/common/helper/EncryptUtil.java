@@ -31,7 +31,7 @@ public class EncryptUtil {
     return new SecretKeySpec(keyBytes, ALGORITHM);
   }
 
-  public byte[] encryptStream(byte[] key, byte[] data) throws Exception {
+  public static byte[] encryptStream(byte[] key, byte[] data) throws Exception {
     Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
     SecretKeySpec keySpec = new SecretKeySpec(key, "AES");
     byte[] iv = new byte[12];
@@ -48,7 +48,7 @@ public class EncryptUtil {
     return buffer.array();
   }
 
-  public byte[] decryptStream(byte[] key, byte[] encryptedData) throws Exception {
+  public static byte[] decryptStream(byte[] key, byte[] encryptedData) throws Exception {
     ByteBuffer buffer = ByteBuffer.wrap(encryptedData);
 
     byte[] iv = new byte[12];
