@@ -49,6 +49,8 @@ security:
     refresh-token:
       key: ${REFRESH_TOKEN_KEY}
       max-age: ${REFRESH_TOKEN_MAX_AGE:1000}
+  oauth2:
+    master-key: ${OAUTH_MASTER_KEY:123456}
 
 management:
   endpoints:

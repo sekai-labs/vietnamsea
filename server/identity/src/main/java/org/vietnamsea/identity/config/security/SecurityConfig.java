@@ -2,6 +2,8 @@ package org.vietnamsea.identity.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -26,8 +28,12 @@ public class SecurityConfig {
   SecurityFilterChain authenticationFilterChain(HttpSecurity http) throws Exception {
     http.csrf(AbstractHttpConfigurer::disable);
     http.cors(cors -> cors.configurationSource(corsConfig.corsConfigurationSource()));
-    http.authorizeHttpRequests((auth) -> auth.requestMatchers("/api-docs/**", "/swagger-ui/**", "/actuator/health")
-        .permitAll()
+    http.authorizeHttpRequests((auth) -> auth.requestMatchers(
+        "/api-docs/**",
+        "/swagger-ui/**",
+        "/actuator/health",
+        "/auth/**",
+        "/.well-known/**").permitAll()
         .anyRequest().authenticated());
     http.exceptionHandling(exception -> {
       exception.authenticationEntryPoint(authenticationEntryPointConfig);
@@ -35,5 +41,10 @@ public class SecurityConfig {
     http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
     http.addFilterBefore(this.jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     return http.build();
+  }
+
+  @Bean
+  PasswordEncoder passwordEncoder() {
+    return PasswordEncoderFactories.createDelegatingPasswordEncoder();
   }
 }
