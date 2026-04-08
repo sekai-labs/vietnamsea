@@ -1,4 +1,6 @@
 spring:
+  config:
+    import: optional:file:.env[.properties]
   data:
     redis:
       port: ${REDIS_PORT:6379}
@@ -43,12 +45,11 @@ server:
 
 security:
   jwt:
-    access-token:
-      key: ${ACCESS_TOKEN_KEY}
-      max-age: ${ACCESS_TOKEN_MAX_AGE:1000}
-    refresh-token:
-      key: ${REFRESH_TOKEN_KEY}
-      max-age: ${REFRESH_TOKEN_MAX_AGE:1000}
+    private-key-path: ${SECURITY_JWT_PRIVATE_KEY_PATH:./keys/jwt-private.pem}
+    public-key-path: ${SECURITY_JWT_PUBLIC_KEY_PATH:./keys/jwt-public.pem}
+    key-id: ${SECURITY_JWT_KEY_ID:identity-key-1}
+    issuer: ${SECURITY_JWT_ISSUER:vietnamsea-identity}
+    max-age: ${SECURITY_JWT_MAX_AGE:3600}
   oauth2:
     master-key: ${OAUTH_MASTER_KEY:123456}
 
