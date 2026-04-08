@@ -2,8 +2,12 @@ package org.vietnamsea.identity.infra.persistence.client.entity;
 
 import java.io.Serializable;
 
+import org.vietnamsea.identity.constant.AuthProviderEnum;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,14 +32,27 @@ public class OAuthClientEntity implements Serializable {
   private Long id;
   @Column(name = "name")
   private String name;
+  @Enumerated(value = EnumType.STRING)
+  @Column(name = "provider")
+  private AuthProviderEnum provider;
   @Column(name = "client_id")
   private String clientId;
   @Column(name = "client_secret_hash")
   private String clientSecretHash;
-  @Column(name = "redirect_urls")
-  private String redirectUrls;
-  @Column(name = "grant_types")
-  private String grantTypes;
+  @Column(name = "authorize_url")
+  private String authorizeUrl;
+  @Column(name = "redirect_url")
+  private String redirectUrl;
+  @Column(name = "user_info_url")
+  private String userInfoUrl;
+  @Column(name = "token_uri")
+  private String tokenUri;
   @Column(name = "scope")
   private String scope;
+  @Column(name = "encrypted_data_key")
+  private String encryptedDataKey;
+  @Column(name = "version")
+  private Integer version;
+  @Column(name = "enabled")
+  private Boolean enabled;
 }

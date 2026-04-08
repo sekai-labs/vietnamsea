@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.SequenceInputStream;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.security.MessageDigest;
@@ -14,6 +15,7 @@ import java.security.SecureRandom;
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
 import javax.crypto.SecretKey;
+import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -27,6 +29,41 @@ public class EncryptUtil {
     MessageDigest digest = MessageDigest.getInstance("SHA-256");
     byte[] keyBytes = digest.digest(input.getBytes(StandardCharsets.UTF_8));
     return new SecretKeySpec(keyBytes, ALGORITHM);
+  }
+
+  public byte[] encryptStream(byte[] key, byte[] data) throws Exception {
+    Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+    SecretKeySpec keySpec = new SecretKeySpec(key, "AES");
+    byte[] iv = new byte[12];
+    new SecureRandom().nextBytes(iv);
+
+    GCMParameterSpec spec = new GCMParameterSpec(128, iv);
+    cipher.init(Cipher.ENCRYPT_MODE, keySpec, spec);
+
+    byte[] encrypted = cipher.doFinal(data);
+
+    ByteBuffer buffer = ByteBuffer.allocate(iv.length + encrypted.length);
+    buffer.put(iv);
+    buffer.put(encrypted);
+    return buffer.array();
+  }
+
+  public byte[] decryptStream(byte[] key, byte[] encryptedData) throws Exception {
+    ByteBuffer buffer = ByteBuffer.wrap(encryptedData);
+
+    byte[] iv = new byte[12];
+    buffer.get(iv);
+
+    byte[] cipherText = new byte[buffer.remaining()];
+    buffer.get(cipherText);
+
+    Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+    SecretKeySpec keySpec = new SecretKeySpec(key, "AES");
+
+    GCMParameterSpec spec = new GCMParameterSpec(128, iv);
+    cipher.init(Cipher.DECRYPT_MODE, keySpec, spec);
+
+    return cipher.doFinal(cipherText);
   }
 
   @SuppressWarnings("resource")

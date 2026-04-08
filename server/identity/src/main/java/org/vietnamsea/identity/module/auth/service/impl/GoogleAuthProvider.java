@@ -4,14 +4,15 @@ import java.io.IOException;
 
 import org.springframework.oxm.ValidationFailureException;
 import org.springframework.stereotype.Service;
-import org.vietnamsea.identity.config.provider.GoogleConfig;
 import org.vietnamsea.identity.constant.AuthProviderEnum;
 import org.vietnamsea.identity.exception.ActionFailedException;
 import org.vietnamsea.identity.infra.persistence.credential.repository.OAuthCredentialRepository;
+import org.vietnamsea.identity.module.auth.config.OAuth2ProviderConfig;
 import org.vietnamsea.identity.module.auth.dto.request.AuthRequest;
 import org.vietnamsea.identity.module.auth.dto.response.AuthIdentityResponse;
 import org.vietnamsea.identity.module.auth.dto.response.GoogleProfileResponse;
 import org.vietnamsea.identity.module.auth.service.AuthProvider;
+import org.vietnamsea.identity.module.client.service.OAuthProviderRegistry;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
@@ -30,8 +31,9 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class GoogleAuthProvider implements AuthProvider {
-  private final GoogleConfig config;
+  private final OAuthProviderRegistry oAuthProviderRegistry;
   private final OAuthCredentialRepository oAuthCredentialRepository;
+
   private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
   private static final GsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
   private static final Gson GSON = new Gson();
@@ -41,9 +43,14 @@ public class GoogleAuthProvider implements AuthProvider {
     return AuthProviderEnum.GOOGLE;
   }
 
+  private OAuth2ProviderConfig getConfig() {
+    return oAuthProviderRegistry.getConfig(getProvider());
+  }
+
   @Override
   public AuthIdentityResponse authenticate(AuthRequest request) {
     try {
+      var config = getConfig();
       GoogleTokenResponse response = new GoogleAuthorizationCodeTokenRequest(
           HTTP_TRANSPORT,
           JSON_FACTORY,
@@ -51,8 +58,9 @@ public class GoogleAuthProvider implements AuthProvider {
           request.getCode(), config.getRedirectUrl())
           .execute();
 
-      var googleProfile = fetchGoogleProfile(response.getAccessToken());
-      var credential = oAuthCredentialRepository.findByProvider_NameAndProviderUserId("Google", googleProfile.getSub())
+      var googleProfile = fetchGoogleProfile(response.getAccessToken(), config.getUserInfoUrl());
+      var credential = oAuthCredentialRepository.findByProvider_ProviderAndProviderUserId(getProvider(),
+          googleProfile.getSub())
           .orElseThrow(() -> new ValidationFailureException("this provider is currently not supported"));
       return AuthIdentityResponse.builder()
           .identity(credential.getUser().getId())
@@ -65,14 +73,14 @@ public class GoogleAuthProvider implements AuthProvider {
     }
   }
 
-  private GoogleProfileResponse fetchGoogleProfile(String accessToken) {
+  private GoogleProfileResponse fetchGoogleProfile(String accessToken, String userProfileEndpoint) {
 
     try {
 
       HttpRequestFactory requestFactory = HTTP_TRANSPORT.createRequestFactory();
 
       HttpRequest request = requestFactory.buildGetRequest(
-          new GenericUrl(config.getUserProfileEndpoint()));
+          new GenericUrl(userProfileEndpoint));
 
       request.getHeaders().setAuthorization("Bearer " + accessToken);
 
