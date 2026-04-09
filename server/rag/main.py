@@ -1,5 +1,17 @@
-def main():
-    print("Hello from rag!")
+import uvicorn
+
+from app.main import app
+from app.core.config import get_settings
+
+
+def main() -> None:
+    settings = get_settings()
+    uvicorn.run(
+        app,
+        host=settings.host,
+        port=settings.port,
+        reload=settings.reload,
+    )
 
 
 if __name__ == "__main__":
