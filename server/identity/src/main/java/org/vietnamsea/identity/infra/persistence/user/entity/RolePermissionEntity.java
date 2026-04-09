@@ -5,7 +5,6 @@ import java.io.Serializable;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
@@ -17,7 +16,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@IdClass(RolePermissionId.class)
 @Table(name = "role_permissions")
 @Getter
 @Setter
