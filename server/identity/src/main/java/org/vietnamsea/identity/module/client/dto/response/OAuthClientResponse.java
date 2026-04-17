@@ -2,7 +2,7 @@ package org.vietnamsea.identity.module.client.dto.response;
 
 import java.util.Set;
 
-import org.vietnamsea.identity.constant.AuthProviderEnum;
+import org.vietnamsea.identity.common.constant.AuthProviderEnum;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

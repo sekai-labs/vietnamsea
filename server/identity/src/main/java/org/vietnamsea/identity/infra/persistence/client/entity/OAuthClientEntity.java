@@ -2,7 +2,7 @@ package org.vietnamsea.identity.infra.persistence.client.entity;
 
 import java.io.Serializable;
 
-import org.vietnamsea.identity.constant.AuthProviderEnum;
+import org.vietnamsea.identity.common.constant.AuthProviderEnum;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

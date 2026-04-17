@@ -2,7 +2,7 @@ package org.vietnamsea.identity.module.client.dto.request;
 
 import java.util.Set;
 
-import org.vietnamsea.identity.constant.AuthProviderEnum;
+import org.vietnamsea.identity.common.constant.AuthProviderEnum;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

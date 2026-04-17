@@ -3,8 +3,10 @@ package org.vietnamsea.identity.module.auth.service;
 import org.vietnamsea.identity.module.auth.dto.request.AuthRequest;
 import org.vietnamsea.identity.module.auth.dto.response.AuthResponse;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 public interface AuthService {
 
-  AuthResponse authentication(AuthRequest request);
+  AuthResponse authentication(AuthRequest request, HttpServletRequest servletRequest);
 
 }

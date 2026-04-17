@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.springframework.oxm.ValidationFailureException;
 import org.springframework.stereotype.Service;
-import org.vietnamsea.identity.constant.AuthProviderEnum;
+import org.vietnamsea.identity.common.constant.AuthProviderEnum;
 import org.vietnamsea.identity.exception.ActionFailedException;
 import org.vietnamsea.identity.infra.persistence.credential.repository.OAuthCredentialRepository;
 import org.vietnamsea.identity.module.auth.config.OAuth2ProviderConfig;
@@ -30,7 +30,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class GoogleAuthProvider implements AuthProvider {
+public class GoogleAuthProviderServiceImpl implements AuthProvider {
   private final OAuthProviderRegistry oAuthProviderRegistry;
   private final OAuthCredentialRepository oAuthCredentialRepository;
 

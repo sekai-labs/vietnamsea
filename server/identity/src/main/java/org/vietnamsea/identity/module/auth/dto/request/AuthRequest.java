@@ -1,6 +1,6 @@
 package org.vietnamsea.identity.module.auth.dto.request;
 
-import org.vietnamsea.identity.constant.AuthProviderEnum;
+import org.vietnamsea.identity.common.constant.AuthProviderEnum;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

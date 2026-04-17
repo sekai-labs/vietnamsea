@@ -1,6 +1,6 @@
 package org.vietnamsea.identity.common.dto;
 
-import org.vietnamsea.identity.constant.QueryOperatorEnum;
+import org.vietnamsea.identity.common.constant.QueryOperatorEnum;
 
 import lombok.Builder;
 import lombok.Data;

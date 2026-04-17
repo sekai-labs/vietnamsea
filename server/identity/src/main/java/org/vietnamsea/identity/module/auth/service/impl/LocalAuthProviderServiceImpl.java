@@ -1,8 +1,8 @@
 package org.vietnamsea.identity.module.auth.service.impl;
 
-import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.vietnamsea.identity.constant.AuthProviderEnum;
+import org.springframework.stereotype.Service;
+import org.vietnamsea.identity.common.constant.AuthProviderEnum;
 import org.vietnamsea.identity.exception.AuthException;
 import org.vietnamsea.identity.exception.ValidationException;
 import org.vietnamsea.identity.infra.persistence.credential.repository.UserCredentialRepository;
@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class LocalAuthProvider implements AuthProvider {
+public class LocalAuthProviderServiceImpl implements AuthProvider {
   private final UserRepository userRepository;
   private final UserCredentialRepository userCredentialRepository;
   private final PasswordEncoder passwordEncoder;
@@ -55,7 +55,6 @@ public class LocalAuthProvider implements AuthProvider {
     try {
       return passwordEncoder.matches(rawPassword, hashPassword);
     } catch (IllegalArgumentException ex) {
-      // Fallback for legacy rows not encoded with a spring-security id prefix.
       return rawPassword.equals(hashPassword);
     }
   }
