@@ -12,6 +12,29 @@ spring:
       lettuce:
         pool:
           max-active: 5
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_URL:localhost:9092}
+    listener:
+      ack-mode: manual
+      concurrency: 3
+    consumer:
+      group-id: identity-group
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        "spring.json.trusted.packages": "*"
+    producer:
+      acks: all
+      retries: 10
+      batch-size: 16384
+      buffer-memory: 33554432
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        "[enable.idempotence]": true
+        "[max.in.flight.requests.per.connection]": 5
   datasource:
     username: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD:12345}

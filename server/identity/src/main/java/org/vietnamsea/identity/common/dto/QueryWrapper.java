@@ -12,8 +12,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
+import org.vietnamsea.identity.common.constant.QueryOperatorEnum;
 import org.vietnamsea.identity.common.helper.TextUtil;
-import org.vietnamsea.identity.constant.QueryOperatorEnum;
 import org.vietnamsea.identity.exception.ValidationException;
 
 public class QueryWrapper {

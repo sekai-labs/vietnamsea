@@ -43,6 +43,14 @@ public class LoginHistoryEntity implements Serializable {
     private String userAgent;
     @Column(name = "success")
     private Boolean success;
+    @Column(name = "lat")
+    private Double lat;
+    @Column(name = "lon")
+    private Double lon;
+    @Column(name = "city")
+    private String city;
+    @Column(name = "country")
+    private String country;
     @Column(name = "created_at")
     private OffsetDateTime createdAt;
 

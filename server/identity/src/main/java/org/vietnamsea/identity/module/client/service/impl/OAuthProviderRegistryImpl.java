@@ -6,9 +6,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.vietnamsea.identity.common.constant.AuthProviderEnum;
 import org.vietnamsea.identity.common.helper.EncryptUtil;
 import org.vietnamsea.identity.config.security.OAuthConfig;
-import org.vietnamsea.identity.constant.AuthProviderEnum;
 import org.vietnamsea.identity.exception.ActionFailedException;
 import org.vietnamsea.identity.exception.ValidationException;
 import org.vietnamsea.identity.infra.persistence.client.repository.OAuthClientRepository;

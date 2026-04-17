@@ -10,6 +10,7 @@ import org.vietnamsea.identity.module.auth.dto.request.AuthRequest;
 import org.vietnamsea.identity.module.auth.dto.response.AuthResponse;
 import org.vietnamsea.identity.module.auth.service.AuthService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -20,8 +21,9 @@ public class AuthController {
   private final AuthService authService;
 
   @PostMapping("login")
-  ResponseEntity<ResponseObject<AuthResponse>> authentication(@Valid @RequestBody AuthRequest request) {
-    var result = authService.authentication(request);
+  ResponseEntity<ResponseObject<AuthResponse>> authentication(@Valid @RequestBody AuthRequest authRequest,
+      HttpServletRequest request) {
+    var result = authService.authentication(authRequest, request);
     return ResponseEntity.ok(new ResponseObject.Builder<AuthResponse>()
         .success(true)
         .code("SUCCESS")

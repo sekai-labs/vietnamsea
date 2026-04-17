@@ -1,4 +1,4 @@
-package org.vietnamsea.identity.constant;
+package org.vietnamsea.identity.common.constant;
 
 public enum QueryOperatorEnum {
   EQ,
